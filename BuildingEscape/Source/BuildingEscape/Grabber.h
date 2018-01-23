@@ -34,5 +34,6 @@ private:
 	void SetupInputComponent();
 	const FHitResult GetFirstPhysicsBodyInReach();
 	bool UnaVez = false;
-
+	FVector GetReachLineEnd();
+	FVector GetReachLineStart();
 };

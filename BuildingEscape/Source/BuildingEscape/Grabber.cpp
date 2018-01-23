@@ -66,19 +66,12 @@ void UGrabber::SetupInputComponent()
 
 const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 {
-	FVector PlayerViewPointLocation;
-	FRotator PlayerViewPointRotation;
-	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(PlayerViewPointLocation, PlayerViewPointRotation);
-	UE_LOG(LogTemp, Warning, TEXT("Posición: %s Rotación: %s"), *PlayerViewPointLocation.ToString(),*PlayerViewPointRotation.ToString());
-	FVector LineaTrazada = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * 100.0f;
-	DrawDebugLine(GetWorld(), PlayerViewPointLocation, LineaTrazada, FColor(255, 0, 0), false, 0.0f, 0.0f, 10.f);
-	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
-
 	FHitResult Hit;
+	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
 	GetWorld()->LineTraceSingleByObjectType(
 		OUT Hit,
-		PlayerViewPointLocation,
-		LineaTrazada,
+		GetReachLineStart(),
+		GetReachLineEnd(),
 		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
 		TraceParameters
 	);
@@ -88,6 +81,24 @@ const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 		UE_LOG(LogTemp, Warning, TEXT("LineTraceHit: %s"), *(ActorHit->GetName()));
 	}
 	return Hit;
+}
+
+FVector UGrabber::GetReachLineStart()
+{
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(PlayerViewPointLocation, PlayerViewPointRotation);
+	UE_LOG(LogTemp, Warning, TEXT("Posición: %s Rotación: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
+	return PlayerViewPointLocation;
+}
+
+FVector UGrabber::GetReachLineEnd()
+{
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(PlayerViewPointLocation, PlayerViewPointRotation);
+	UE_LOG(LogTemp, Warning, TEXT("Posición: %s Rotación: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
+	return PlayerViewPointLocation + PlayerViewPointRotation.Vector() * 100.0f;
 }
 
 // Called when the game starts
@@ -106,15 +117,10 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
 		SetupInputComponent();
 		UnaVez = true;
 	}
-	FVector PlayerViewPointLocation;
-	FRotator PlayerViewPointRotation;
-	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(PlayerViewPointLocation, PlayerViewPointRotation);
-	//UE_LOG(LogTemp, Warning, TEXT("Posición: %s Rotación: %s"), *PlayerViewPointLocation.ToString(),*PlayerViewPointRotation.ToString());
-	FVector LineaTrazada = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * 200.0f;
 	if (PhysicsHandle->GrabbedComponent)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Objeto cogido"));
-		PhysicsHandle->SetTargetLocation(LineaTrazada);
+		PhysicsHandle->SetTargetLocation(GetReachLineEnd());
 	}
 
 }
