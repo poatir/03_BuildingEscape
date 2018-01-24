@@ -26,13 +26,13 @@ public:
 	void CerrarPuerta();
 
 private:
-	AActor * DoorObject;
+	AActor * DoorObject = nullptr;
 
 	UPROPERTY(EditAnywhere)
 	float AnguloApertura=90.0f;
 
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume * Trigger;
+	ATriggerVolume * Trigger = nullptr;
 
 	//AActor * ActorQueAbre;
 

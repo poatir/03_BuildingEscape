@@ -19,6 +19,7 @@ float UOpenDoor::GetTotalMassOfActorsOnPlate()
 {
 	float TotalMass = 0.0f;
 	TArray<AActor*> OverlappingActors;
+	if (!Trigger) { return TotalMass; }
 	Trigger->GetOverlappingActors(OUT OverlappingActors);
 	for (const auto& Actor: OverlappingActors)
 	{
@@ -33,6 +34,10 @@ void UOpenDoor::BeginPlay()
 	Super::BeginPlay();
 	DoorObject = GetOwner();
 	//ActorQueAbre = GetWorld()->GetFirstPlayerController()->GetPawn();
+	if (!Trigger)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No hay volumen Trigger"));
+	}
 }
 
 
