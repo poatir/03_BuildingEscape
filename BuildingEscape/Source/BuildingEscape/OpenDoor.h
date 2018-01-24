@@ -34,11 +34,11 @@ private:
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume * Trigger;
 
-	AActor * ActorQueAbre;
+	//AActor * ActorQueAbre;
 
 	UPROPERTY(EditAnywhere)
 	float PuertaCerrarDelay = 5.f;
 
 	float UltimoTiempo;
-
+	float GetTotalMassOfActorsOnPlate();
 };

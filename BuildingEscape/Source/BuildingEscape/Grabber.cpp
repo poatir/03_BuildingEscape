@@ -98,7 +98,7 @@ FVector UGrabber::GetReachLineEnd()
 	FRotator PlayerViewPointRotation;
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(PlayerViewPointLocation, PlayerViewPointRotation);
 	UE_LOG(LogTemp, Warning, TEXT("Posición: %s Rotación: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
-	return PlayerViewPointLocation + PlayerViewPointRotation.Vector() * 100.0f;
+	return PlayerViewPointLocation + PlayerViewPointRotation.Vector() * 300.0f;
 }
 
 // Called when the game starts
