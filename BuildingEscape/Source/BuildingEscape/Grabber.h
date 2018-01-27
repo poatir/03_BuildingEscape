@@ -16,7 +16,7 @@ class BUILDINGESCAPE_API UGrabber : public UActorComponent
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this component's properties
+	// Sets default values for this compteonent's properties
 	UGrabber();
 
 	// Called when the game starts
